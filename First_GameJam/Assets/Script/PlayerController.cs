@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
@@ -33,9 +34,11 @@ public class PlayerController : MonoBehaviour
     public int enemyDamageTaken = 20;
 
     Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         currentHealth = maxHealth;
     }
@@ -111,20 +114,26 @@ public class PlayerController : MonoBehaviour
 
                     rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
                 }
+                else
+                {
+                    TakeDamage(damageTaken);
+                
+                }
             }
         }
-        else
-        {
-                TakeDamage(damageTaken);
-        }
-            
         
+    }
+    private IEnumerator BlinkRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        spriteRenderer.color = Color.white;
     }
 
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        
+        StartCoroutine(BlinkRed());
         if(currentHealth <= 0)
         {
             Die();
