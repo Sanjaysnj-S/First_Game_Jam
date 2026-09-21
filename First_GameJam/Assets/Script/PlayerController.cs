@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10f;
     private float jumpRemaining = 1;
     
+    [Header("Gravity")]
+    public float baseGravity = 2f;
+    public float fallSpeed = 20f;
+    public float fallMultiplier = 2.5f;
 
     [Header("Ground Check")]
 
@@ -18,10 +22,19 @@ public class PlayerController : MonoBehaviour
     public Vector2 groundCheckSize;
     public bool isGrounded;
 
+    [Header("Health")]
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    [Header("Damage")]
+    public int damageTaken = 50;
+
     Rigidbody2D rb;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -30,7 +43,7 @@ public class PlayerController : MonoBehaviour
         
         rb.linearVelocity = new Vector2(horizontalInput * speed, rb.linearVelocityY);
         GroundCheck();
-        
+        Gravity();
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -38,7 +51,7 @@ public class PlayerController : MonoBehaviour
         horizontalInput = context.ReadValue<Vector2>().x;
     }
 
-    [System.Obsolete]
+    
     public void Jump(InputAction.CallbackContext context)
     {
         if(context.performed && isGrounded)
@@ -57,6 +70,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void Gravity()
+    {
+        if(rb.linearVelocityY < 0)
+        {
+            rb.gravityScale = baseGravity*fallSpeed;
+            rb.linearVelocity = new Vector2(rb.linearVelocityX,Mathf.Max(rb.linearVelocityY, -fallSpeed));
+        }
+        else
+        {
+            rb.gravityScale = baseGravity;
+        }
+    }
+
             
 
     private void OnDrawGizmosSelected()
@@ -64,4 +90,29 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(groundCheckPos.position,groundCheckSize);
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(damageTaken);
+            
+        }
+    }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Debug.Log("Player Died");
+    }
 }
+
