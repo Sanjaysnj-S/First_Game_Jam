@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Damage")]
     public int damageTaken = 50;
+    [Header("Enemy Damage")]
+    public int enemyDamageTaken = 20;
 
     Rigidbody2D rb;
     void Start()
@@ -95,9 +98,27 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(damageTaken);
-            
+            foreach(ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.normal.y > 0.5f)
+                {
+                    Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(enemyDamageTaken);
+                    }
+
+                    rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
+                }
+            }
         }
+        else
+        {
+                TakeDamage(damageTaken);
+        }
+            
+        
     }
 
     void TakeDamage(int damage)
