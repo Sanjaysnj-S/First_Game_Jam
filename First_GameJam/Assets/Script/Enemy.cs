@@ -4,7 +4,20 @@ public class Enemy : MonoBehaviour
 {
     [Header("Health")]
     public int health = 100;
+    Rigidbody2D rb;
 
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    private void Update()
+    {
+        if (TimePauseManager.Instance != null && TimePauseManager.Instance.isPlayerTimeActive)
+            return;
+
+        MoveEnemy();
+    }
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -18,5 +31,10 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void MoveEnemy()
+    {
+        rb.linearVelocityX = -1f;
     }
 }
