@@ -7,84 +7,98 @@ public class WatchUI : MonoBehaviour
     public GameObject watchPanel;
     public TMP_Text currentTimeText;
 
-    [Header("Player Time")]
-    public float pauseDuration = 5f;
-
-    private bool pauseMode = false;
-    private float pauseTimer;
+    private GameTimer gameTimer;
 
     private void Start()
     {
         watchPanel.SetActive(false);
+
+        gameTimer = FindObjectOfType<GameTimer>();
     }
 
     private void Update()
     {
-        // Update watch time
+        // Update the time shown inside the watch
         if (watchPanel.activeSelf)
         {
             UpdateTimeText();
         }
-
-        // Player-only time
-        if (pauseMode)
-        {
-            pauseTimer -= Time.deltaTime;
-
-            if (pauseTimer <= 0f)
-            {
-                EndTimerPause();
-            }
-        }
     }
+
+    // =========================
+    // OPEN WATCH
+    // =========================
 
     public void OpenWatch()
     {
-        // Freeze everything
+        // Freeze the entire game
         Time.timeScale = 0f;
 
         watchPanel.SetActive(true);
 
         UpdateTimeText();
+
+        Debug.Log("WATCH OPENED - GAME FROZEN");
     }
+
+    // =========================
+    // CLOSE WATCH
+    // =========================
 
     public void CloseWatch()
     {
         watchPanel.SetActive(false);
 
+        // Resume the game
         Time.timeScale = 1f;
+
+        Debug.Log("WATCH CLOSED - GAME RESUMED");
     }
+
+    // =========================
+    // TIME PAUSE
+    // =========================
+
+    public void StartTimerPause()
+    {
+        Debug.Log("TIME PAUSE BUTTON CLICKED");
+
+        // Close watch UI
+        watchPanel.SetActive(false);
+
+        // Resume Unity time
+        // Player can move now
+        Time.timeScale = 1f;
+
+        // Tell TimePauseManager to start
+        // player-only time
+        if (TimePauseManager.Instance != null)
+        {
+            TimePauseManager.Instance.StartPlayerTime();
+
+            Debug.Log("PLAYER TIME STARTED");
+        }
+        else
+        {
+            Debug.LogError("TimePauseManager Instance is NULL!");
+        }
+    }
+
+    // =========================
+    // UPDATE WATCH TIME
+    // =========================
 
     void UpdateTimeText()
     {
-        float time = FindObjectOfType<GameTimer>().GetGameTime();
+        if (gameTimer == null)
+            return;
+
+        float time = gameTimer.GetGameTime();
 
         int minutes = Mathf.FloorToInt(time / 60f);
         int seconds = Mathf.FloorToInt(time % 60f);
 
         currentTimeText.text =
             string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
-    public void StartTimerPause()
-    {
-        // Close watch
-        watchPanel.SetActive(false);
-
-        // Start 5 second player time
-        pauseMode = true;
-        pauseTimer = pauseDuration;
-
-        // Resume Unity time
-        Time.timeScale = 1f;
-
-        Debug.Log("PLAYER TIME STARTED");
-    }
-
-    void EndTimerPause()
-    {
-        pauseMode = false;
-
-        Debug.Log("PLAYER TIME ENDED");
     }
 }

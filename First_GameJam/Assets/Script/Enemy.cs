@@ -4,24 +4,33 @@ public class Enemy : MonoBehaviour
 {
     [Header("Health")]
     public int health = 100;
-    Rigidbody2D rb;
 
+    private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
     private void Update()
     {
-        if (TimePauseManager.Instance != null && TimePauseManager.Instance.isPlayerTimeActive)
+        if (TimePauseManager.Instance != null &&
+            TimePauseManager.Instance.isPlayerTimeActive)
+        {
+            // Stop enemy movement
+            rb.linearVelocity = Vector2.zero;
             return;
+        }
 
         MoveEnemy();
     }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
+
         Debug.Log("Enemy Health: " + health);
+
         if (health <= 0)
         {
             Die();
@@ -35,6 +44,6 @@ public class Enemy : MonoBehaviour
 
     public void MoveEnemy()
     {
-        rb.linearVelocityX = -1f;
+        rb.linearVelocity = new Vector2(-1f, rb.linearVelocity.y);
     }
 }

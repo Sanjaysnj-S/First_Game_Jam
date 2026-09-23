@@ -1920,7 +1920,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WatchUI
   watchPanel: {fileID: 1375313444}
   currentTimeText: {fileID: 1272009081}
-  pauseDuration: 5
 --- !u!114 &1231028982
 MonoBehaviour:
   m_ObjectHideFlags: 0
