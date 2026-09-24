@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class WatchUI : MonoBehaviour
 {
@@ -7,11 +8,24 @@ public class WatchUI : MonoBehaviour
     public GameObject watchPanel;
     public TMP_Text currentTimeText;
 
+    [Header("Rewind UI")]
+    public GameObject rewindPanel;
+    public Slider rewindSlider;
+    public TMP_Text rewindSelectedText;
     private GameTimer gameTimer;
 
     private void Start()
     {
         watchPanel.SetActive(false);
+        rewindPanel.SetActive(false);
+
+        rewindSlider.minValue = 0;
+        rewindSlider.maxValue = 10;
+        rewindSlider.wholeNumbers = true;
+
+        rewindSlider.onValueChanged.AddListener(UpdateRewindTime);
+
+        UpdateRewindTime(rewindSlider.value);
 
         gameTimer = FindObjectOfType<GameTimer>();
     }
@@ -25,10 +39,7 @@ public class WatchUI : MonoBehaviour
         }
     }
 
-    // =========================
-    // OPEN WATCH
-    // =========================
-
+    
     public void OpenWatch()
     {
         // Freeze the entire game
@@ -41,9 +52,6 @@ public class WatchUI : MonoBehaviour
         Debug.Log("WATCH OPENED - GAME FROZEN");
     }
 
-    // =========================
-    // CLOSE WATCH
-    // =========================
 
     public void CloseWatch()
     {
@@ -55,9 +63,6 @@ public class WatchUI : MonoBehaviour
         Debug.Log("WATCH CLOSED - GAME RESUMED");
     }
 
-    // =========================
-    // TIME PAUSE
-    // =========================
 
     public void StartTimerPause()
     {
@@ -84,9 +89,6 @@ public class WatchUI : MonoBehaviour
         }
     }
 
-    // =========================
-    // UPDATE WATCH TIME
-    // =========================
 
     void UpdateTimeText()
     {
@@ -100,5 +102,19 @@ public class WatchUI : MonoBehaviour
 
         currentTimeText.text =
             string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    //REWIND
+    public void OpenRewind()
+    {
+        watchPanel.SetActive(false);
+        rewindPanel.SetActive(true);
+    }
+
+    void UpdateRewindTime(float value)
+    {
+        int seconds = Mathf.RoundToInt(value);
+
+        rewindSelectedText.text = "Rewind:"+seconds+"sec";
     }
 }
