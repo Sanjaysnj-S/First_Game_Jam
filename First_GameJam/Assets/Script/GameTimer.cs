@@ -7,7 +7,6 @@ public class GameTimer : MonoBehaviour
     
     private float gameTime = 0f;
 
-  
 
     private void Update()
     {
@@ -27,6 +26,10 @@ public class GameTimer : MonoBehaviour
     public float GetGameTime()
     {
         return gameTime;
+    }
+    public void SetGameTime(float newTime)
+    {
+        gameTime = newTime;
     }
     
 }

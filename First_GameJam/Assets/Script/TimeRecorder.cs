@@ -4,21 +4,31 @@ using UnityEngine.InputSystem;
 
 public class TimeRecorder : MonoBehaviour
 {
+    PlayerController player;
+    GameTimer gameTimer;
+
+    public void Start()
+    {
+        player = GetComponent<PlayerController>();
+        gameTimer = FindAnyObjectByType<GameTimer>();
+    }
     [System.Serializable]
     public class PlayerState
     {
         public float time;
         public Vector3 position;
+        public int health;
 
-        public PlayerState(float time, Vector3 position)
+        public PlayerState(float time, Vector3 position, int health)
         {
             this.time = time;
             this.position = position;
+            this.health = health;
         }
     }
 
     [Header("Recording")]
-    public float recordDuration = 10f;
+    public float recordDuration = 20f;
     public float recordInterval = 0.1f;
 
     private List<PlayerState> states = new List<PlayerState>();
@@ -47,7 +57,8 @@ public class TimeRecorder : MonoBehaviour
     {
         PlayerState state = new PlayerState(
             Time.time,
-            transform.position
+            transform.position,
+            player.currentHealth
         );
 
         states.Add(state);
@@ -77,7 +88,11 @@ public class TimeRecorder : MonoBehaviour
             return;
         }
 
+        float currentTime = gameTimer.GetGameTime();
+
         float targetTime = Time.time - seconds;
+
+        if(targetTime < 0f) targetTime = 0f;
 
         PlayerState closestState = states[0];
 
@@ -90,7 +105,11 @@ public class TimeRecorder : MonoBehaviour
             }
         }
 
+        gameTimer.SetGameTime(targetTime);
         transform.position = closestState.position;
+        player.currentHealth = closestState.health;
+
+
 
         Debug.Log("Rewound " + seconds + " seconds");
     }

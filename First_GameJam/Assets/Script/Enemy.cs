@@ -44,6 +44,6 @@ public class Enemy : MonoBehaviour
 
     public void MoveEnemy()
     {
-        rb.linearVelocity = new Vector2(-1f, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(-0.5f, rb.linearVelocity.y);
     }
 }
