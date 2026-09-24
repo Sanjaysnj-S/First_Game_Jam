@@ -131,16 +131,26 @@ public class WatchUI : MonoBehaviour
 
         if (seconds <= 0)
         {
-            Debug.Log("Select a rewind time first!");
+            // Debug.Log("Select a rewind time first!");
             return;
         }
+        float currentTime = gameTimer.GetGameTime();
+        float targetTime = Mathf.Max(0f, currentTime - seconds);
 
         timeRecorder.Rewind(seconds);
 
+        
+        EnemyTimeRecorder[] enemies = FindObjectsByType<EnemyTimeRecorder>(FindObjectsSortMode.None);
+        foreach (EnemyTimeRecorder enemy in enemies)
+        {
+            enemy.Rewind(seconds);
+        }
+
         rewindPanel.SetActive(false);
+        gameTimer.SetGameTime(targetTime);
 
         Time.timeScale = 1f;
 
-        Debug.Log("Rewound " + seconds + " seconds");
+        // Debug.Log("Rewound " + seconds + " seconds");
     }
 }

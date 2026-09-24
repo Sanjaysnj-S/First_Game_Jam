@@ -1,19 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class TimeRecorder : MonoBehaviour
+public class EnemyTimeRecorder : MonoBehaviour
 {
-    private PlayerController player;
-    private GameTimer gameTimer;
-
     [System.Serializable]
-    public class PlayerState
+    public class EnemyState
     {
         public float time;
         public Vector3 position;
         public int health;
 
-        public PlayerState(float time, Vector3 position, int health)
+        public EnemyState(float time, Vector3 position, int health)
         {
             this.time = time;
             this.position = position;
@@ -21,39 +19,39 @@ public class TimeRecorder : MonoBehaviour
         }
     }
 
-    [Header("Recording")]
+    [Header("Recorder")]
     public float recordDuration = 20f;
     public float recordInterval = 0.1f;
 
-    private List<PlayerState> states = new List<PlayerState>();
+    private List<EnemyState> states = new List<EnemyState>();
+
     private float recordTimer;
+
+    private GameTimer gameTimer;
+    private Enemy enemy;
+    private Rigidbody2D rb;
 
     private void Start()
     {
-        player = GetComponent<PlayerController>();
         gameTimer = FindAnyObjectByType<GameTimer>();
-
-        if (player == null)
-        {
-            Debug.LogError("PlayerController not found!");
-            return;
-        }
-
-        if (gameTimer == null)
-        {
-            Debug.LogError("GameTimer not found!");
-            return;
-        }
+        enemy = GetComponent<Enemy>();
+        rb = GetComponent<Rigidbody2D>();
 
         RecordState();
     }
 
     private void Update()
     {
-        if (player == null || gameTimer == null)
+        if (gameTimer == null || enemy == null)
             return;
 
-        // Record interval
+        // Don't record during Player Time
+        if (TimePauseManager.Instance != null &&
+            TimePauseManager.Instance.isPlayerTimeActive)
+        {
+            return;
+        }
+
         recordTimer += Time.deltaTime;
 
         if (recordTimer >= recordInterval)
@@ -61,30 +59,26 @@ public class TimeRecorder : MonoBehaviour
             RecordState();
             recordTimer = 0f;
         }
+       
 
-        // Keep only last 20 seconds
         RemoveOldStates();
     }
 
     private void RecordState()
     {
-        float currentTime = gameTimer.GetGameTime();
-
-        PlayerState state = new PlayerState(
-            currentTime,
-            transform.position,
-            player.currentHealth
+        states.Add(
+            new EnemyState(
+                gameTimer.GetGameTime(),
+                transform.position,
+                enemy.health
+            )
         );
-
-        states.Add(state);
     }
 
     private void RemoveOldStates()
     {
-        float currentTime = gameTimer.GetGameTime();
-
         float oldestAllowedTime =
-            currentTime - recordDuration;
+            gameTimer.GetGameTime() - recordDuration;
 
         while (states.Count > 0 &&
                states[0].time < oldestAllowedTime)
@@ -97,21 +91,22 @@ public class TimeRecorder : MonoBehaviour
     {
         if (states.Count == 0)
         {
-            Debug.LogWarning("No recorded player states!");
+            Debug.LogWarning(
+                gameObject.name + " has no recorded history!"
+            );
+
             return;
         }
 
         float currentTime = gameTimer.GetGameTime();
 
-        // Calculate target time
         float targetTime = currentTime - seconds;
 
         if (targetTime < 0f)
             targetTime = 0f;
 
-        PlayerState closestState = states[0];
+        EnemyState closestState = states[0];
 
-        // Find state at target time
         for (int i = states.Count - 1; i >= 0; i--)
         {
             if (states[i].time <= targetTime)
@@ -121,18 +116,21 @@ public class TimeRecorder : MonoBehaviour
             }
         }
 
-        // Restore player position
+        // Restore position
         transform.position = closestState.position;
 
-        // Restore player health
-        player.currentHealth = closestState.health;
+        // Restore health
+        enemy.health = closestState.health;
+
+        // Stop current movement
+        rb.linearVelocity = Vector2.zero;
 
         Debug.Log(
-            "PLAYER REWIND | " +
-            "Current: " + currentTime +
-            " | Target: " + targetTime +
-            " | State: " + closestState.time +
-            " | Health: " + closestState.health
+            gameObject.name +
+            " REWOUND | Time: " +
+            closestState.time +
+            " | Health: " +
+            closestState.health
         );
     }
 }

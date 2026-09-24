@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
         if (TimePauseManager.Instance != null &&
             TimePauseManager.Instance.isPlayerTimeActive)
         {
-            // Stop enemy movement
             rb.linearVelocity = Vector2.zero;
             return;
         }
@@ -44,6 +43,7 @@ public class Enemy : MonoBehaviour
 
     public void MoveEnemy()
     {
-        rb.linearVelocity = new Vector2(-0.5f, rb.linearVelocity.y);
+        rb.linearVelocity =
+            new Vector2(-0.5f, rb.linearVelocity.y);
     }
 }
