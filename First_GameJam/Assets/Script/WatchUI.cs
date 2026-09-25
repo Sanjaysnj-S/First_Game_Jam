@@ -11,6 +11,7 @@ public class WatchUI : MonoBehaviour
     [Header("Rewind UI")]
     public GameObject rewindPanel;
     public Slider rewindSlider;
+    public TMP_Text rewindCurrentTime;
     public TMP_Text rewindSelectedText;
     public TimeRecorder timeRecorder;
 
@@ -40,6 +41,10 @@ public class WatchUI : MonoBehaviour
         if (watchPanel.activeSelf)
         {
             UpdateTimeText();
+        }
+        if (rewindPanel.activeSelf)
+        {
+            UpdateRewindCurrentTime();
         }
     }
 
@@ -115,6 +120,8 @@ public class WatchUI : MonoBehaviour
         rewindPanel.SetActive(true);
 
         rewindSlider.value = 0f;
+
+        UpdateRewindCurrentTime();
         UpdateRewindTime(0f);
     }
 
@@ -123,6 +130,21 @@ public class WatchUI : MonoBehaviour
         int seconds = Mathf.RoundToInt(value);
 
         rewindSelectedText.text = "Rewind:"+seconds+"sec";
+    }
+
+    
+    void UpdateRewindCurrentTime()
+    {
+        if (gameTimer == null || rewindCurrentTime == null)
+            return;
+
+        float time = gameTimer.GetGameTime();
+
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+
+        rewindCurrentTime.text =
+            string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void RewindButton()
