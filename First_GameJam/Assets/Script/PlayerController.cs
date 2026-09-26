@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     public float jumpForce = 10f;
     private float jumpRemaining = 1;
+    public float enemyPush = 15f;
     
     [Header("Gravity")]
     public float baseGravity = 2f;
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
                         enemy.TakeDamage(enemyDamageTaken);
                     }
 
-                    rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
+                    rb.linearVelocity = new Vector2(rb.linearVelocityX, enemyPush);
                 }
                 else
                 {

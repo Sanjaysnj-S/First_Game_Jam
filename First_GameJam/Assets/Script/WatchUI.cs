@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class WatchUI : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class WatchUI : MonoBehaviour
 
     private void Update()
     {
+        OpenWatch();
         // Update the time shown inside the watch
         if (watchPanel.activeSelf)
         {
@@ -51,14 +53,18 @@ public class WatchUI : MonoBehaviour
     
     public void OpenWatch()
     {
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            Time.timeScale = 0f;
+
+            watchPanel.SetActive(true);
+
+            UpdateTimeText();
+        }
         // Freeze the entire game
-        Time.timeScale = 0f;
+        
 
-        watchPanel.SetActive(true);
-
-        UpdateTimeText();
-
-        Debug.Log("WATCH OPENED - GAME FROZEN");
+        // Debug.Log("WATCH OPENED - GAME FROZEN");
     }
 
 
@@ -116,6 +122,7 @@ public class WatchUI : MonoBehaviour
     //REWIND
     public void OpenRewind()
     {
+        
         watchPanel.SetActive(false);
         rewindPanel.SetActive(true);
 
