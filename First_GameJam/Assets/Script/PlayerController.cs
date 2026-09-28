@@ -174,7 +174,14 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        
+        if (collision.gameObject.layer == LayerMask.NameToLayer("FinishLine"))
+        {
+            Time.timeScale = 0f;
+        }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EndLine"))
+        {
+            transform.position = new Vector3(0,0,0);
+        }
     }
     private IEnumerator BlinkRed()
     {
@@ -197,5 +204,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player Died");
     }
+
+   
 }
 
