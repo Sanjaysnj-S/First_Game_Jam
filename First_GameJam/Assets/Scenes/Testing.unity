@@ -5596,7 +5596,7 @@ Transform:
   m_GameObject: {fileID: 333561285}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7, y: -3.9410002, z: -10}
+  m_LocalPosition: {x: -4.5699997, y: -1.2410002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6332,7 +6332,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7, y: -3.9410002, z: -10}
+  m_LocalPosition: {x: -4.5699997, y: -1.2410002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7207,7 +7207,7 @@ Transform:
   m_GameObject: {fileID: 942775489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7, y: -4.391, z: 0}
+  m_LocalPosition: {x: -4.57, y: -4.391, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7275,7 +7275,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.014919162, y: -0.012170315}
+  m_Offset: {x: 0.017140865, y: -0.012170315}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7285,7 +7285,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6695235, y: 0.9694891}
+  m_Size: {x: 0.6384182, y: 0.9694891}
   m_EdgeRadius: 0
 --- !u!114 &942775494
 MonoBehaviour:
@@ -7301,13 +7301,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   speed: 5
   jumpForce: 7.5
-  enemyPush: 9.5
   baseGravity: 1
   fallSpeed: 14
   fallMultiplier: 1
   groundCheckPos: {fileID: 480944489}
   groundCheckSize: {x: 0.5, y: 0.1}
   isGrounded: 0
+  minBounceForce: 2.5
+  maxBounceForce: 10
+  maxJumpHeight: 2.5
   maxHealth: 100
   currentHealth: 0
   damageTaken: 25
@@ -29910,16 +29912,16 @@ MonoBehaviour:
   m_ZDamping: 1
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.53
+  m_ScreenY: 0.71
   m_CameraDistance: 10
   m_DeadZoneWidth: 0.04
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 1.49
+  m_SoftZoneWidth: 0.78
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: 0
+  m_BiasY: -0.144
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
@@ -30129,7 +30131,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Size.x
-      value: 0.625824
+      value: 0.61453056
       objectReference: {fileID: 0}
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Size.y
@@ -30137,7 +30139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Offset.x
-      value: -0.0012178421
+      value: 0.00066423416
       objectReference: {fileID: 0}
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Offset.y
@@ -30162,6 +30164,14 @@ PrefabInstance:
     - target: {fileID: 2220659307499359803, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Color.r
       value: 0.23773581
+      objectReference: {fileID: 0}
+    - target: {fileID: 2779914964838200529, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
+      propertyPath: speed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2779914964838200529, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
+      propertyPath: health
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 7932001158133592506, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_LocalPosition.x

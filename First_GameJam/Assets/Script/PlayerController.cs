@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     public float jumpForce = 10f;
     private float jumpRemaining = 1;
-    public float enemyPush = 15f;
+    
     
     [Header("Gravity")]
     public float baseGravity = 2f;
@@ -24,6 +25,15 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheckPos;
     public Vector2 groundCheckSize;
     public bool isGrounded;
+
+    [Header("PlayerBounce")]
+    public float minBounceForce = 5f;
+    public float maxBounceForce = 15f;
+    public float maxJumpHeight = 7.5f;
+
+    private float jumpStartY;
+    private float highestJumpY;
+    private bool isJumping;
 
     [Header("Health")]
     public int maxHealth = 100;
@@ -55,6 +65,10 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(horizontalInput * speed, rb.linearVelocityY);
         GroundCheck();
         Gravity();
+        if (!isGrounded && transform.position.y > highestJumpY)
+        {
+            highestJumpY = transform.position.y;
+        }       
 
         anim.SetBool("IsGrounded", isGrounded);
 
@@ -87,6 +101,9 @@ public class PlayerController : MonoBehaviour
     {
         if(context.performed && isGrounded)
         {
+            jumpStartY = transform.position.y;
+            highestJumpY = transform.position.y;            
+
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpForce);
         }
         else if (context.canceled)
@@ -136,9 +153,19 @@ public class PlayerController : MonoBehaviour
                     if (enemy != null)
                     {
                         enemy.TakeDamage(enemyDamageTaken);
+
+                        float jumpHeight = highestJumpY - jumpStartY;
+                        
+                        float normalizedHeight = Mathf.Clamp01(jumpHeight / maxJumpHeight);
+                        float bounceForce = Mathf.Lerp(minBounceForce,maxBounceForce,normalizedHeight);
+
+                       
+                        rb.linearVelocity = new Vector2(rb.linearVelocityX,bounceForce);
+
+                        
                     }
 
-                    rb.linearVelocity = new Vector2(rb.linearVelocityX, enemyPush);
+                    // rb.linearVelocity = new Vector2(rb.linearVelocityX, PlayerBounceForce);
                 }
                 else
                 {
