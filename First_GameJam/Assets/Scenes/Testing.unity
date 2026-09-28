@@ -5596,7 +5596,7 @@ Transform:
   m_GameObject: {fileID: 333561285}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.608, y: -3.4909997, z: -10}
+  m_LocalPosition: {x: -2.7, y: -3.9410002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6332,7 +6332,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.608, y: -3.4909997, z: -10}
+  m_LocalPosition: {x: -2.7, y: -3.9410002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7207,7 +7207,7 @@ Transform:
   m_GameObject: {fileID: 942775489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.608, y: -4.391, z: 0}
+  m_LocalPosition: {x: -2.7, y: -4.391, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7275,7 +7275,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.012784004, y: -0.0022017956}
+  m_Offset: {x: 0.014919162, y: -0.012170315}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7285,7 +7285,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7613697, y: 0.99551725}
+  m_Size: {x: 0.6695235, y: 0.9694891}
   m_EdgeRadius: 0
 --- !u!114 &942775494
 MonoBehaviour:
@@ -29910,13 +29910,13 @@ MonoBehaviour:
   m_ZDamping: 1
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.56
+  m_ScreenY: 0.53
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0
+  m_DeadZoneWidth: 0.04
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
+  m_SoftZoneWidth: 1.49
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
@@ -30129,19 +30129,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Size.x
-      value: 0.6769829
+      value: 0.625824
       objectReference: {fileID: 0}
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Size.y
-      value: 0.6319194
+      value: 0.6246109
       objectReference: {fileID: 0}
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: -0.0012178421
       objectReference: {fileID: 0}
     - target: {fileID: 1246636710448574931, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Offset.y
-      value: -0.18404031
+      value: -0.18769455
       objectReference: {fileID: 0}
     - target: {fileID: 1716845454184430291, guid: 7280a905defab5f4c9dbfead7967c969, type: 3}
       propertyPath: m_Name
