@@ -34,12 +34,16 @@ public class PlayerController : MonoBehaviour
     [Header("Enemy Damage")]
     public int enemyDamageTaken = 20;
 
+    [Header("Animator")]
+    private Animator anim;
+
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 
         currentHealth = maxHealth;
     }
@@ -51,11 +55,31 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(horizontalInput * speed, rb.linearVelocityY);
         GroundCheck();
         Gravity();
+
+        anim.SetBool("IsGrounded", isGrounded);
+
+        anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+
+        
+        
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         horizontalInput = context.ReadValue<Vector2>().x;
+        anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+
+        if(horizontalInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            
+        }
+        else if(horizontalInput < 0)
+        {
+            
+            transform.localScale = new Vector3(-1, 1, 1);
+            
+        }
     }
 
     
@@ -74,6 +98,7 @@ public class PlayerController : MonoBehaviour
     public void GroundCheck()
     {
         isGrounded = Physics2D.OverlapBox(groundCheckPos.position,groundCheckSize,0f,LayerMask.GetMask("Ground"));
+        anim.SetBool("isGrounded",isGrounded);
 
     }
 
