@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class WatchUI : MonoBehaviour
 {
+    public TMP_Text gameTime;
     [Header("Watch UI")]
     public GameObject watchPanel;
     public TMP_Text currentTimeText;
@@ -24,6 +25,8 @@ public class WatchUI : MonoBehaviour
     {
         watchPanel.SetActive(false);
         rewindPanel.SetActive(false);
+        gameTime.gameObject.SetActive(true);
+       
 
         rewindSlider.minValue = 0;
         rewindSlider.maxValue = 20;

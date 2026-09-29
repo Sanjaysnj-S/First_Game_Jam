@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Compeleted UI")]
+    public GameObject levelFinished;
     [Header("Move")]
     public float speed = 5f;
     float horizontalInput;  
@@ -65,6 +68,9 @@ public class PlayerController : MonoBehaviour
 
         healthBar.maxValue = maxHealth;
         healthBar.value = currentHealth;
+
+
+        levelFinished.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -186,10 +192,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("FinishLine"))
         {
             Time.timeScale = 0f;
+            levelFinished.gameObject.SetActive(true);
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("EndLine"))
         {
-            transform.position = new Vector3(0,0,0);
+            SceneManager.LoadScene("Level_1");
         }
     }
     private IEnumerator BlinkRed()
