@@ -121,9 +121,7 @@ public class Enemy : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
 
-        Debug.Log(
-            "ENEMY REVIVED | Health: " + health
-        );
+     
     }
 
     public void MoveEnemy()

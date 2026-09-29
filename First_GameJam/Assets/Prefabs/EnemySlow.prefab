@@ -118,7 +118,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1466331928, guid: 9486a516e7528c641b681499ba7ce109, type: 3}
-  m_Color: {r: 0.2392157, g: 0.227451, b: 0.22352943, a: 1}
+  m_Color: {r: 0.97735846, g: 0.3923264, b: 0.19731575, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7932001158133592506}
   m_Layer: 0
-  m_Name: EnemyPTP
+  m_Name: EnemySlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

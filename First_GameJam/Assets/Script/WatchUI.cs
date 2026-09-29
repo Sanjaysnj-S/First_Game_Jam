@@ -190,4 +190,9 @@ public class WatchUI : MonoBehaviour
 
         // Debug.Log("Rewound " + seconds + " seconds");
     }
+    public void CloseRewindPanel()
+    {
+        rewindPanel.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
 }

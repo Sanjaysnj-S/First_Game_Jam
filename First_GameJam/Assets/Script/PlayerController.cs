@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Compeleted UI")]
     public GameObject levelFinished;
+    public GameObject restartLevel;
     [Header("Move")]
     public float speed = 5f;
     float horizontalInput;  
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
 
         levelFinished.gameObject.SetActive(false);
+        restartLevel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -157,46 +159,50 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            foreach(ContactPoint2D contact in collision.contacts)
+        if (collision.gameObject.CompareTag("Enemy"))
+        {   
+            bool isStomping = false;
+
+        // Check all contact points first
+            foreach (ContactPoint2D contact in collision.contacts)
             {
                 if (contact.normal.y > 0.5f)
                 {
-                    Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                
-                    if (enemy != null)
-                    {
-                        enemy.TakeDamage(enemyDamageTaken);
-
-                        float jumpHeight = highestJumpY - jumpStartY;
-                        
-                        float normalizedHeight = Mathf.Clamp01(jumpHeight / maxJumpHeight);
-                        float bounceForce = Mathf.Lerp(minBounceForce,maxBounceForce,normalizedHeight);
-
-                       
-                        rb.linearVelocity = new Vector2(rb.linearVelocityX,bounceForce);
-
-                        
-                    }
-
-                    // rb.linearVelocity = new Vector2(rb.linearVelocityX, PlayerBounceForce);
-                }
-                else
-                {
-                    TakeDamage(damageTaken);
-                
+                    isStomping = true;
+                    break;
                 }
             }
+
+        // Player landed on enemy
+            if (isStomping)
+            {
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(enemyDamageTaken);
+
+                    float jumpHeight = highestJumpY - jumpStartY;
+
+                    float normalizedHeight = Mathf.Clamp01(jumpHeight / maxJumpHeight);
+
+                    float bounceForce = Mathf.Lerp(minBounceForce,maxBounceForce,normalizedHeight);
+
+                    rb.linearVelocity = new Vector2(rb.linearVelocityX,bounceForce);
+                }
+            }
+        // Player touched enemy from side
+            else
+            {
+                TakeDamage(damageTaken);
+            }
         }
+
+    // Finish Line
         if (collision.gameObject.layer == LayerMask.NameToLayer("FinishLine"))
         {
             Time.timeScale = 0f;
             levelFinished.gameObject.SetActive(true);
-        }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("EndLine"))
-        {
-            SceneManager.LoadScene("Level_1");
         }
     }
     private IEnumerator BlinkRed()
@@ -223,6 +229,8 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         Debug.Log("Player Died");
+        restartLevel.gameObject.SetActive(true);
+        Destroy(gameObject);
     }
 
    

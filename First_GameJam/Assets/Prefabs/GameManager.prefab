@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &981170620736172956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3012092421100047972}
+  - component: {fileID: 4982553336351593847}
+  - component: {fileID: 1652909340735168349}
+  - component: {fileID: 6742794068233225874}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3012092421100047972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981170620736172956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.95173, y: 0.47825, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4982553336351593847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981170620736172956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439b171a1771eb94d941e684b2b071ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  timeText: {fileID: 0}
+--- !u!114 &1652909340735168349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981170620736172956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21aa3ca74f5cb374f977a5479276bcb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WatchUI
+  gameTime: {fileID: 0}
+  watchPanel: {fileID: 0}
+  currentTimeText: {fileID: 0}
+  rewindPanel: {fileID: 0}
+  rewindSlider: {fileID: 0}
+  rewindCurrentTime: {fileID: 0}
+  rewindSelectedText: {fileID: 0}
+  timeRecorder: {fileID: 0}
+--- !u!114 &6742794068233225874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981170620736172956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ae175353e285d4fa22d13a0555b04c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimePauseManager
+  playerMoveDuration: 5
+  isPlayerTimeActive: 0
+  pausetime: {fileID: 0}
