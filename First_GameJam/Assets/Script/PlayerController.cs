@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,9 +39,13 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     public int maxHealth = 100;
     public int currentHealth;
+    [Header("Heart")]
+    public Slider healthBar;
 
-    [Header("Damage")]
-    public int damageTaken = 50;
+    [Header("DamageTaken for player")]
+    public int damageTaken = 5;
+    public int pauseDamageTaken = 10;
+    public int rewindDamageTaken = 10;
     [Header("Enemy Damage")]
     public int enemyDamageTaken = 20;
 
@@ -56,6 +61,10 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         currentHealth = maxHealth;
+
+
+        healthBar.maxValue = maxHealth;
+        healthBar.value = currentHealth;
     }
 
     // Update is called once per frame
@@ -190,10 +199,14 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.color = Color.white;
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        healthBar.value = currentHealth;
+
         StartCoroutine(BlinkRed());
+
         if(currentHealth <= 0)
         {
             Die();

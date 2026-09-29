@@ -14,10 +14,10 @@ public class WatchUI : MonoBehaviour
     public Slider rewindSlider;
     public TMP_Text rewindCurrentTime;
     public TMP_Text rewindSelectedText;
+
+    [Header("Script references")]
     public TimeRecorder timeRecorder;
-
-
-
+    PlayerController player;
     private GameTimer gameTimer;
 
     private void Start()
@@ -34,6 +34,8 @@ public class WatchUI : MonoBehaviour
         UpdateRewindTime(rewindSlider.value);
 
         gameTimer = FindObjectOfType<GameTimer>();
+        player = FindFirstObjectByType<PlayerController>();
+        
     }
 
     private void Update()
@@ -75,14 +77,14 @@ public class WatchUI : MonoBehaviour
         // Resume the game
         Time.timeScale = 1f;
 
-        Debug.Log("WATCH CLOSED - GAME RESUMED");
+       
     }
 
 
     public void StartTimerPause()
     {
-        Debug.Log("TIME PAUSE BUTTON CLICKED");
-
+        
+        player.TakeDamage(player.pauseDamageTaken);
         // Close watch UI
         watchPanel.SetActive(false);
 
@@ -96,7 +98,7 @@ public class WatchUI : MonoBehaviour
         {
             TimePauseManager.Instance.StartPlayerTime();
 
-            Debug.Log("PLAYER TIME STARTED");
+            
         }
         else
         {
@@ -158,6 +160,10 @@ public class WatchUI : MonoBehaviour
     {
         int seconds = Mathf.RoundToInt(rewindSlider.value);
 
+        //player health reduce
+        player.TakeDamage(player.rewindDamageTaken);
+
+
         if (seconds <= 0)
         {
             // Debug.Log("Select a rewind time first!");
@@ -168,7 +174,6 @@ public class WatchUI : MonoBehaviour
 
         timeRecorder.Rewind(seconds);
 
-        
         EnemyTimeRecorder[] enemies = FindObjectsByType<EnemyTimeRecorder>(FindObjectsSortMode.None);
         foreach (EnemyTimeRecorder enemy in enemies)
         {
