@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3164324140962177055}
   - component: {fileID: 6884319818591586603}
   - component: {fileID: 2294742249968056983}
+  - component: {fileID: 8466582488957389026}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -105,7 +106,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939809207821207402}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -285,6 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c6567915bd8b43899bb51105916a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  levelFinished: {fileID: 0}
+  restartLevel: {fileID: 0}
   speed: 5
   jumpForce: 7.5
   baseGravity: 1
@@ -299,9 +302,10 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 0}
-  damageTaken: 25
+  damageTaken: 15
   pauseDamageTaken: 10
   rewindDamageTaken: 10
+  trapDamage: 5
   enemyDamageTaken: 25
 --- !u!114 &6884319818591586603
 MonoBehaviour:
@@ -315,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4e121624c211b41a2c92e3679a37b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeRecorder
-  recordDuration: 10
+  recordDuration: 20
   recordInterval: 0.1
 --- !u!95 &2294742249968056983
 Animator:
@@ -339,6 +343,84 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!60 &8466582488957389026
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939809207821207402}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.875, y: 1.125}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.19077778, y: 0.47021306}
+      - {x: -0.2100892, y: 0.40981007}
+      - {x: -0.2813425, y: 0.374676}
+      - {x: -0.30011606, y: 0.2230128}
+      - {x: -0.3636694, y: 0.19582307}
+      - {x: -0.36169434, y: 0.052516937}
+      - {x: -0.3027668, y: 0.0164541}
+      - {x: -0.24602509, y: -0.054617167}
+      - {x: -0.19933128, y: -0.10020673}
+      - {x: -0.23725986, y: -0.14073586}
+      - {x: -0.2823887, y: -0.19285417}
+      - {x: -0.35645247, y: -0.26830316}
+      - {x: -0.3523383, y: -0.39475787}
+      - {x: -0.25626945, y: -0.41631854}
+      - {x: -0.21562529, y: -0.53178084}
+      - {x: 0.044676304, y: -0.5289515}
+      - {x: 0.061055183, y: -0.4730339}
+      - {x: 0.22062063, y: -0.46292782}
+      - {x: 0.24747467, y: -0.37235057}
+      - {x: 0.34271002, y: -0.32188213}
+      - {x: 0.36006021, y: -0.19776905}
+      - {x: 0.278399, y: -0.1478436}
+      - {x: 0.20483923, y: -0.14885819}
+      - {x: 0.18348312, y: -0.11345661}
+      - {x: 0.2659564, y: -0.092612505}
+      - {x: 0.2810421, y: -0.04039061}
+      - {x: 0.33691025, y: -0.010165453}
+      - {x: 0.33691072, y: 0.11482394}
+      - {x: 0.2887292, y: 0.16941214}
+      - {x: 0.2978053, y: 0.3538075}
+      - {x: 0.20281744, y: 0.46503836}
+  m_UseDelaunayMesh: 1
 --- !u!1 &2002876191341980427
 GameObject:
   m_ObjectHideFlags: 0

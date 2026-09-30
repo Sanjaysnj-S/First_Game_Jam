@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public int damageTaken = 5;
     public int pauseDamageTaken = 10;
     public int rewindDamageTaken = 10;
+    public int trapDamage = 5;
     [Header("Enemy Damage")]
     public int enemyDamageTaken = 20;
 
@@ -196,6 +197,12 @@ public class PlayerController : MonoBehaviour
             {
                 TakeDamage(damageTaken);
             }
+        }
+
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Trap"))
+        {
+            TakeDamage(trapDamage);
+            rb.linearVelocity = new Vector2(rb.linearVelocityX,6f);
         }
 
     // Finish Line
